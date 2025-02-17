@@ -1,0 +1,112 @@
+<html>
+    <head>
+
+
+
+    </head>
+    <body>
+
+
+
+
+
+
+
+
+        <canvas id="viewCanvas" width="800" height="600"></canvas>
+        
+        <button id="forward" onclick="forward()">Forward</button>
+        <button id="backward" onclick="backward()">Backward</button>
+        <button id="left" onclick="left()">Left</button>
+        <button id="right" onclick="right()">Right</button>
+        
+        
+
+
+
+        <script>
+
+            //the control api is at /controls
+
+            let controls = {
+                forward: false,
+                backward: false,
+                left: false,
+                right: false
+            }
+
+            function forward() {
+                controls.forward = true
+                submit()
+            }
+            
+            function backward() {
+                controls.backward = true
+                submit()
+            }
+
+            function left() {
+                controls.left = true
+                submit()
+            }
+
+            function right() {
+                controls.right = true
+                submit()
+            }
+
+
+
+
+            function submit() {
+                fetch('/controls', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(controls)
+                })
+                controls = {
+                    forward: false,
+                    backward: false,
+                    left: false,
+                    right: false
+                }
+            }
+
+
+            
+
+
+            //register wasd
+            document.addEventListener('keydown', function(event) {
+                if(event.key == 'w') {
+                    forward()
+                }
+                if(event.key == 's') {
+                    backward()
+                }
+                if(event.key == 'a') {
+                    left()
+                }
+                if(event.key == 'd') {
+                    right()
+                }
+            })
+
+
+
+        </script>
+
+
+
+
+
+
+
+
+    
+
+
+    </body>
+</html>

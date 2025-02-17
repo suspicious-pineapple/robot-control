@@ -1,0 +1,16 @@
+{
+  "name": "robot-control",
+  "version": "0.0.1",
+  "description": "a thing to control robots",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
