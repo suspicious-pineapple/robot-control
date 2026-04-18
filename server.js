@@ -1,5 +1,7 @@
 import express from 'express';
 
+import {SerialPort} from "serialport";
+
 const app = express();
 
 app.use(express.json())
@@ -40,7 +42,6 @@ app.get('/image', (req, res) => {
 
 app.post('/controls', async (req, res) => {
     let data = req.body;
-    console.log(data);
 
     //update controls, checking validity of true or false
     controls.forward = data.forward === true;
@@ -58,6 +59,34 @@ app.post('/controls', async (req, res) => {
 
 
 
+const serial = new SerialPort({path: "COM3",baudRate:11250});
+serial.on('data', (chunk)=>{console.log(chunk.toString())});
+setInterval(()=>{
+    
+    if(Date.now() - controls.timestamp > 3000){
+        return;
+    }
+
+    if(controls.backward){
+        serial.write("\r\nir tx NEC 01 01\r\n");
+    }
+    if(controls.forward){
+        serial.write("\r\nir tx NEC 01 01\r\n");
+
+    }
+    if(controls.right){
+        serial.write("\r\nir tx NEC 01 01\r\n");
+    }
+    if(controls.left){
+        serial.write("\r\nir tx NEC 01 01\r\n");
+    }
+
+
+
+
+    serial.drain((v)=>{});
+
+},200)
 
 
 

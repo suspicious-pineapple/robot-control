@@ -11,6 +11,7 @@
   "author": "me",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "serialport": "^13.0.0"
   }
 }

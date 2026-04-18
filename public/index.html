@@ -35,24 +35,20 @@
                 right: false
             }
 
-            function forward() {
-                controls.forward = true
-                submit()
+            function forward(val) {
+                controls.forward = val
             }
             
-            function backward() {
-                controls.backward = true
-                submit()
+            function backward(val) {
+                controls.backward = val
             }
 
-            function left() {
-                controls.left = true
-                submit()
+            function left(val) {
+                controls.left = val
             }
 
-            function right() {
-                controls.right = true
-                submit()
+            function right(val) {
+                controls.right = val
             }
 
 
@@ -81,19 +77,40 @@
             //register wasd
             document.addEventListener('keydown', function(event) {
                 if(event.key == 'w') {
-                    forward()
+                    forward(true)
                 }
                 if(event.key == 's') {
-                    backward()
+                    backward(true)
                 }
                 if(event.key == 'a') {
-                    left()
+                    left(true)
                 }
                 if(event.key == 'd') {
-                    right()
+                    right(true)
                 }
-            })
+                submit()
 
+            });
+
+
+
+            //register wasd
+            document.addEventListener('keyup', function(event) {
+                if(event.key == 'w') {
+                    forward(false)
+                }
+                if(event.key == 's') {
+                    backward(false)
+                }
+                if(event.key == 'a') {
+                    left(false)
+                }
+                if(event.key == 'd') {
+                    right(false)
+                }
+                submit()
+
+            })
 
 
         </script>
