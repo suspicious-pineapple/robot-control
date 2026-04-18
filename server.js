@@ -63,7 +63,7 @@ const serial = new SerialPort({path: "COM3",baudRate:11250});
 serial.on('data', (chunk)=>{console.log(chunk.toString())});
 setInterval(()=>{
     
-    if(Date.now() - controls.timestamp > 3000){
+    if(Date.now() - controls.timestamp > 1000){
         return;
     }
 
@@ -86,7 +86,7 @@ setInterval(()=>{
 
     serial.drain((v)=>{});
 
-},200)
+},150)
 
 
 
