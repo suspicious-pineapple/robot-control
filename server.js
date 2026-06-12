@@ -1,4 +1,5 @@
 import express from 'express';
+import Gpio from "onoff";
 
 
 const app = express();
@@ -58,24 +59,94 @@ app.post('/controls', async (req, res) => {
 
 
 
+let rightForward1 = new Gpio(4,"out");
+let rightForward2 = new Gpio(17,"out");
+let rightBackward1 = new Gpio(27,"out");
+let rightBackward2 = new Gpio(22,"out");
+let leftForward1 = new Gpio(5,"out");
+let leftForward2 = new Gpio(6,"out");
+let leftBackward1 = new Gpio(13,"out");
+let leftBackward2 = new Gpio(19,"out");
+
+
+
+
+function setRight(dir){
+    if(dir==-1){
+        rightForward1.writeSync(0);
+        rightForward2.writeSync(0);
+        rightBackward1.writeSync(1);
+        rightBackward2.writeSync(1);
+    }
+    if(dir==0){
+        rightForward1.writeSync(0);
+        rightForward2.writeSync(0);
+        rightBackward1.writeSync(0);
+        rightBackward2.writeSync(0);
+    }
+    if(dir==1){
+        rightForward1.writeSync(1);
+        rightForward2.writeSync(1);
+        rightBackward1.writeSync(0);
+        rightBackward2.writeSync(0);
+    }
+}
+
+
+
+
+function setLeft(dir){
+    if(dir==-1){
+        leftForward1.writeSync(0);
+        leftForward2.writeSync(0);
+        leftBackward1.writeSync(1);
+        leftBackward2.writeSync(1);
+    }
+    if(dir==0){
+        leftForward1.writeSync(0);
+        leftForward2.writeSync(0);
+        leftBackward1.writeSync(0);
+        leftBackward2.writeSync(0);
+    }
+    if(dir==1){
+        leftForward1.writeSync(1);
+        leftForward2.writeSync(1);
+        leftBackward1.writeSync(0);
+        leftBackward2.writeSync(0);
+    }
+}
+
+
+
+
 setInterval(()=>{
     
-    if(Date.now() - controls.timestamp > 1000){
+    if(Date.now() - controls.timestamp > 500){
+        setLeft(0);    
+        setRight(0);    
         return;
     }
 
+
+
+
     if(controls.backward){
-        
+        setLeft(-1);    
+        setRight(-1);    
     }
     if(controls.forward){
-
-
+        
+        setLeft(1);    
+        setRight(1);    
     }
     if(controls.right){
+        setRight(-1);    
+        setLeft(1);    
 
     }
     if(controls.left){
-
+        setRight(1);    
+        setLeft(-1);
     }
 
 
