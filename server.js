@@ -1,6 +1,6 @@
 import express from 'express';
-import Gpio from "onoff";
-
+import {Gpio} from "onoff";
+console.log(Gpio);
 
 const app = express();
 
@@ -59,14 +59,14 @@ app.post('/controls', async (req, res) => {
 
 
 
-let rightForward1 = new Gpio(4,"out");
-let rightForward2 = new Gpio(17,"out");
-let rightBackward1 = new Gpio(27,"out");
-let rightBackward2 = new Gpio(22,"out");
-let leftForward1 = new Gpio(5,"out");
-let leftForward2 = new Gpio(6,"out");
-let leftBackward1 = new Gpio(13,"out");
-let leftBackward2 = new Gpio(19,"out");
+let rightForward1 = new Gpio(4+512,"out"); //4
+let rightForward2 = new Gpio(17+512,"out"); //17
+let rightBackward1 = new Gpio(27+512,"out"); //27
+let rightBackward2 = new Gpio(22+512,"out"); //22
+let leftForward1 = new Gpio(5+512,"out"); //5 
+let leftForward2 = new Gpio(6+512,"out"); //6
+let leftBackward1 = new Gpio(13+512,"out"); //13
+let leftBackward2 = new Gpio(19+512,"out"); //19
 
 
 
