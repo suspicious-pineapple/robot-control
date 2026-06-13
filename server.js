@@ -53,7 +53,7 @@ app.post('/controls', async (req, res) => {
 
 
     console.log(controls);
-
+    updateGpio();
     res.status(200).send('Controls updated');
 });
 
@@ -118,9 +118,8 @@ function setLeft(dir){
 
 
 
+function updateGpio(){
 
-setInterval(()=>{
-    
     if(Date.now() - controls.timestamp > 300){
         setLeft(0);    
         setRight(0);    
@@ -149,10 +148,15 @@ setInterval(()=>{
         setLeft(-1);
     }
 
+}
+
+
+setInterval(()=>{
+    updateGpio(); 
 
 
 
-},100)
+},200)
 
 
 
