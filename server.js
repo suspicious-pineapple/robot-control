@@ -59,10 +59,10 @@ app.post('/controls', async (req, res) => {
 
 
 
-let rightForward1 = new Gpio(4+512,"out"); //4
+let rightForward1 = new Gpio(22+512,"out"); //4
 let rightForward2 = new Gpio(27+512,"out"); //17
 let rightBackward1 = new Gpio(17+512,"out"); //27
-let rightBackward2 = new Gpio(22+512,"out"); //22
+let rightBackward2 = new Gpio(4+512,"out"); //22
 let leftForward1 = new Gpio(5+512,"out"); //5 
 let leftForward2 = new Gpio(6+512,"out"); //6
 let leftBackward1 = new Gpio(13+512,"out"); //13
