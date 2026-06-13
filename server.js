@@ -63,10 +63,10 @@ let rightBackward1 = new Gpio(17+512,"out"); //4
 let rightBackward2 = new Gpio(27+512,"out"); //17
 let rightForward1 = new Gpio(4+512,"out"); //27
 let rightForward2 = new Gpio(22+512,"out"); //22
-let leftForward1 = new Gpio(19+512,"out"); //5 
-let leftForward2 = new Gpio(5+512,"out"); //6
-let leftBackward1 = new Gpio(13+512,"out"); //13
-let leftBackward2 = new Gpio(6+512,"out"); //19
+let leftBackward1 = new Gpio(19+512,"out"); //5 
+let leftBackward2 = new Gpio(5+512,"out"); //6
+let leftForward1 = new Gpio(13+512,"out"); //13
+let leftForward2 = new Gpio(6+512,"out"); //19
 
 
 
@@ -121,7 +121,7 @@ function setLeft(dir){
 
 setInterval(()=>{
     
-    if(Date.now() - controls.timestamp > 500){
+    if(Date.now() - controls.timestamp > 300){
         setLeft(0);    
         setRight(0);    
         return;
@@ -152,7 +152,7 @@ setInterval(()=>{
 
 
 
-},350)
+},100)
 
 
 
