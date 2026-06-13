@@ -73,22 +73,22 @@ let leftForward2 = new Gpio(6+512,"out"); //19
 
 function setRight(dir){
     if(dir==-1){
-        rightForward1.writeSync(0);
-        rightForward2.writeSync(0);
-        rightBackward1.writeSync(1);
-        rightBackward2.writeSync(1);
+        rightForward1.write(0);
+        rightForward2.write(0);
+        rightBackward1.write(1);
+        rightBackward2.write(1);
     }
     if(dir==0){
-        rightForward1.writeSync(0);
-        rightForward2.writeSync(0);
-        rightBackward1.writeSync(0);
-        rightBackward2.writeSync(0);
+        rightForward1.write(0);
+        rightForward2.write(0);
+        rightBackward1.write(0);
+        rightBackward2.write(0);
     }
     if(dir==1){
-        rightForward1.writeSync(1);
-        rightForward2.writeSync(1);
-        rightBackward1.writeSync(0);
-        rightBackward2.writeSync(0);
+        rightForward1.write(1);
+        rightForward2.write(1);
+        rightBackward1.write(0);
+        rightBackward2.write(0);
     }
 }
 
@@ -97,22 +97,22 @@ function setRight(dir){
 
 function setLeft(dir){
     if(dir==-1){
-        leftForward1.writeSync(0);
-        leftForward2.writeSync(0);
-        leftBackward1.writeSync(1);
-        leftBackward2.writeSync(1);
+        leftForward1.write(0);
+        leftForward2.write(0);
+        leftBackward1.write(1);
+        leftBackward2.write(1);
     }
     if(dir==0){
-        leftForward1.writeSync(0);
-        leftForward2.writeSync(0);
-        leftBackward1.writeSync(0);
-        leftBackward2.writeSync(0);
+        leftForward1.write(0);
+        leftForward2.write(0);
+        leftBackward1.write(0);
+        leftBackward2.write(0);
     }
     if(dir==1){
-        leftForward1.writeSync(1);
-        leftForward2.writeSync(1);
-        leftBackward1.writeSync(0);
-        leftBackward2.writeSync(0);
+        leftForward1.write(1);
+        leftForward2.write(1);
+        leftBackward1.write(0);
+        leftBackward2.write(0);
     }
 }
 
