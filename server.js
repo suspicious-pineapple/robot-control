@@ -123,7 +123,7 @@ function setLeft(dir){
 
 
 
-let pwmPeriod = 20;
+let pwmPeriod = 50;
 let leftRatio = 0;
 let rightRatio = 0;
 
