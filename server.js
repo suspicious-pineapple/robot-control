@@ -128,7 +128,7 @@ class SoftPwm{
         this.callback = callback;
         this.lowValue = 0;
         this.highValue = 0;
-        this.duty = 0.2;
+        this.duty = 0.35;
         this.state = false;
     
         this.update(callback);
@@ -200,7 +200,8 @@ setInterval(()=>{
 
 
 
-},2000)
+},300)
+
 
 
 
