@@ -118,6 +118,50 @@ function setLeft(dir){
 
 
 
+let pwmPeriod = 20;
+let leftRatio = 0;
+let rightRatio = 0;
+
+class SoftPwm{
+    constructor(period,callback){
+        this.period = period;
+        this.callback = callback;
+        this.lowValue = 0;
+        this.highValue = 0;
+        this.duty = 0;
+        this.state = false;
+    
+        this.update();
+    }
+    update(){
+
+        
+        if(this.state && this.duty!=0){
+            this.callback(this.highValue);
+            setTimeout(this.update,this.period*this.duty);
+        } else {
+            this.callback(this.lowValue);
+            setTimeout(this.update,this.period*(1-this.duty));
+        }
+        this.state = !this.state;
+
+    }
+
+}
+
+
+let leftPwm = new SoftPwm(20, setLeft);
+let rightPwm = new SoftPwm(20, setRight);
+
+function setLeftPwm(val){
+    leftPwm.highValue=val;
+}
+function setRightPwm(val){
+    rightPwm.highValue=val;
+}
+
+
+
 function updateGpio(){
 
     if(Date.now() - controls.timestamp > 300){
@@ -130,22 +174,22 @@ function updateGpio(){
 
 
     if(controls.backward){
-        setLeft(-1);    
-        setRight(-1);    
+        setLeftPwm(-1);    
+        setRightPwm(-1);    
     }
     if(controls.forward){
         
-        setLeft(1);    
-        setRight(1);    
+        setLeftPwm(1);    
+        setRightPwm(1);    
     }
     if(controls.right){
-        setRight(-1);    
-        setLeft(1);    
+        setRightPwm(-1);    
+        setLeftPwm(1);    
 
     }
     if(controls.left){
-        setRight(1);    
-        setLeft(-1);
+        setRightPwm(1);    
+        setLeftPwm(-1);
     }
 
 }
@@ -156,7 +200,7 @@ setInterval(()=>{
 
 
 
-},200)
+},2000)
 
 
 
