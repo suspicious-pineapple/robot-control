@@ -128,7 +128,7 @@ class SoftPwm{
         this.callback = callback;
         this.lowValue = 0;
         this.highValue = 0;
-        this.duty = 0;
+        this.duty = 0.2;
         this.state = false;
     
         this.update(callback);
@@ -136,7 +136,7 @@ class SoftPwm{
     update(callback){
 
         
-        if(this.state && this.duty!=0){
+        if(this.state && this.duty!=0 &&this.highValue!=this.lowValue){
             this.callback(this.highValue);
             setTimeout(()=>this.update(callback),this.period*this.duty);
         } else {
