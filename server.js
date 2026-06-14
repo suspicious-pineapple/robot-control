@@ -40,10 +40,14 @@ app.get('/image', (req, res) => {
 });
 
 
-
+let forwardChangeTime = 0;
 app.post('/controls', async (req, res) => {
     let data = req.body;
 
+    if(controls.forward!=data.forward){
+        forwardChangeTime=Date.now();
+    }
+    
     //update controls, checking validity of true or false
     controls.forward = data.forward === true;
     controls.backward = data.backward === true;
@@ -136,8 +140,7 @@ class SoftPwm{
     }
     update(callback){
 
-        this.duty = Math.sin(Date.now()/2000);
-        if(this.state && this.duty!=0 &&this.highValue!=this.lowValue){
+            if(this.state && this.duty!=0 &&this.highValue!=this.lowValue){
             callback(this.highValue);
             setTimeout(()=>this.update(callback),this.period*this.duty);
         } else {
@@ -154,11 +157,13 @@ class SoftPwm{
 let leftPwm = new SoftPwm(20, setLeft);
 let rightPwm = new SoftPwm(20, setRight);
 
-function setLeftPwm(val){
+function setLeftPwm(val,duty=1){
     leftPwm.highValue=val;
+    leftPwm.duty=duty;
 }
-function setRightPwm(val){
+function setRightPwm(val,duty=1){
     rightPwm.highValue=val;
+    rightPwm.duty=duty;
 }
 
 
@@ -175,13 +180,16 @@ function updateGpio(){
 
 
     if(controls.backward){
-        setLeftPwm(-1);    
-        setRightPwm(-1);    
+        setLeftPwm(-1,0.35);    
+        setRightPwm(-1,0.35);    
     }
     else if(controls.forward){
         
-        setLeftPwm(1);    
-        setRightPwm(1);    
+        let forwardTime = Date.now()-forwardChangeTime;
+        let throttle = Math.max(forwardTime / 2000,1)
+
+        setLeftPwm(1,throttle);    
+        setRightPwm(1,throttle);    
     }
     else if(controls.right){
         setRightPwm(-1);    
