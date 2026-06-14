@@ -131,17 +131,17 @@ class SoftPwm{
         this.duty = 0;
         this.state = false;
     
-        this.update();
+        this.update(callback);
     }
-    update(){
+    update(callback){
 
         
         if(this.state && this.duty!=0){
             this.callback(this.highValue);
-            setTimeout(this.update,this.period*this.duty);
+            setTimeout(()=>this.update(callback),this.period*this.duty);
         } else {
             this.callback(this.lowValue);
-            setTimeout(this.update,this.period*(1-this.duty));
+            setTimeout(()=>this.update(callback),this.period*(1-this.duty));
         }
         this.state = !this.state;
 
@@ -184,7 +184,7 @@ function updateGpio(){
     }
     if(controls.right){
         setRightPwm(-1);    
-        setLeftPwm(1);    
+        setLeftPwm(1);
 
     }
     if(controls.left){
