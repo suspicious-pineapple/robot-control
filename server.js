@@ -186,7 +186,7 @@ function updateGpio(){
     else if(controls.forward){
         
         let forwardTime = Date.now()-forwardChangeTime;
-        let throttle = Math.max(forwardTime / 2000,1)
+        let throttle = Math.max(forwardTime / 5000,1)
 
         setLeftPwm(1,throttle);    
         setRightPwm(1,throttle);    
