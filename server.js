@@ -40,6 +40,7 @@ app.get('/image', (req, res) => {
 });
 
 
+
 app.post('/controls', async (req, res) => {
     let data = req.body;
 
@@ -135,7 +136,7 @@ class SoftPwm{
     }
     update(callback){
 
-        
+        this.duty = Math.sin(Date.now()/2000);
         if(this.state && this.duty!=0 &&this.highValue!=this.lowValue){
             callback(this.highValue);
             setTimeout(()=>this.update(callback),this.period*this.duty);
@@ -177,20 +178,25 @@ function updateGpio(){
         setLeftPwm(-1);    
         setRightPwm(-1);    
     }
-    if(controls.forward){
+    else if(controls.forward){
         
         setLeftPwm(1);    
         setRightPwm(1);    
     }
-    if(controls.right){
+    else if(controls.right){
         setRightPwm(-1);    
         setLeftPwm(1);
 
     }
-    if(controls.left){
+    else if(controls.left){
         setRightPwm(1);    
         setLeftPwm(-1);
+    } else {
+        setRightPwm(0);    
+        setLeftPwm(0);    
+
     }
+
 
 }
 
