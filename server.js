@@ -185,20 +185,18 @@ function updateGpio(){
     }
     else if(controls.forward){
         
-        let forwardTime = Date.now()-forwardChangeTime;
-        let throttle = Math.max(forwardTime / 5000,1)
 
-        setLeftPwm(1,throttle);    
-        setRightPwm(1,throttle);    
+        setLeftPwm(1,0.45);    
+        setRightPwm(1,0.45);    
     }
     else if(controls.right){
-        setRightPwm(-1);    
-        setLeftPwm(1);
+        setRightPwm(-1,0.7);    
+        setLeftPwm(1,0.7);
 
     }
     else if(controls.left){
-        setRightPwm(1);    
-        setLeftPwm(-1);
+        setRightPwm(1,0.7);    
+        setLeftPwm(-1,0.7);
     } else {
         setRightPwm(0);    
         setLeftPwm(0);    
