@@ -137,10 +137,10 @@ class SoftPwm{
 
         
         if(this.state && this.duty!=0 &&this.highValue!=this.lowValue){
-            this.callback(this.highValue);
+            callback(this.highValue);
             setTimeout(()=>this.update(callback),this.period*this.duty);
         } else {
-            this.callback(this.lowValue);
+            callback(this.lowValue);
             setTimeout(()=>this.update(callback),this.period*(1-this.duty));
         }
         this.state = !this.state;
@@ -165,8 +165,8 @@ function setRightPwm(val){
 function updateGpio(){
 
     if(Date.now() - controls.timestamp > 300){
-        setLeft(0);    
-        setRight(0);    
+        setLeftPwm(0);    
+        setRightPwm(0);    
         return;
     }
 
