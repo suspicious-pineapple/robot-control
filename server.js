@@ -36,9 +36,9 @@ let controls = {
 
 }
 setInterval(()=>{
-    controls.forward=lerp(controls.forward,controlsRaw.forward,0.03);
-    controls.sideways=lerp(controls.sideways,controlsRaw.sideways,0.1);
-},40);
+    controls.forward=lerp(controls.forward,controlsRaw.forward,0.09);
+    controls.sideways=lerp(controls.sideways,controlsRaw.sideways,0.35);
+},50);
 
 
 //get for image
@@ -166,8 +166,8 @@ class SoftPwm{
 }
 
 
-let leftPwm = new SoftPwm(20, setLeft);
-let rightPwm = new SoftPwm(20, setRight);
+let leftPwm = new SoftPwm(10, setLeft);
+let rightPwm = new SoftPwm(10, setRight);
 
 function setLeftPwm(speed){
     leftPwm.highValue=Math.sign(speed);

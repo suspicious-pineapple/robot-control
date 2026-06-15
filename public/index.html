@@ -73,8 +73,8 @@
             function left(val) {
                 controls.left = val;
                 if(val){
-                    controlVector.sideways-=0.3;
-                    controlVector.sideways=Math.max(-1,controlVector.sideways)
+                    controlVector.sideways-=0.5;
+                    controlVector.sideways=Math.max(-1,controlVector.sideways)                    
                 } else {
                     controlVector.sideways=0;
                 }
@@ -83,7 +83,7 @@
             function right(val) {
                 controls.right = val
                 if(val){
-                    controlVector.sideways+=0.3;
+                    controlVector.sideways+=0.5;
                     controlVector.sideways=Math.min(1,controlVector.sideways)
                 } else {
                     controlVector.sideways=0;
