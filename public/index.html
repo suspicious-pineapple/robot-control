@@ -58,6 +58,11 @@
             function backward(val) {
                 controls.backward = val
                 if(val){
+                                        if(controlVector.forward==0){
+                        controlVector.forward = -0.3;
+
+                    }
+
                     controlVector.forward -= 0.1;
                     controlVector.forward=Math.max(-1,controlVector.forward);
                 } else {   
