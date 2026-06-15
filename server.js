@@ -182,7 +182,7 @@ function setRightPwm(speed){
 
 function updateGpio(){
 
-    if(Date.now() - controls.timestamp > 500){
+    if(Date.now() - controls.timestamp > 1000){
         setLeftPwm(0);    
         setRightPwm(0);    
         return;
