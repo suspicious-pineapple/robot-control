@@ -36,8 +36,8 @@ let controls = {
 
 }
 setInterval(()=>{
-    controls.forward=lerp(controls.forward,controlsRaw.forward,0.09);
-    controls.sideways=lerp(controls.sideways,controlsRaw.sideways,0.35);
+    controls.forward=lerp(controls.forward,controlsRaw.forward,0.12);
+    controls.sideways=lerp(controls.sideways,controlsRaw.sideways,1);
 },50);
 
 
