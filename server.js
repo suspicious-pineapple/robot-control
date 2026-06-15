@@ -38,7 +38,7 @@ let controls = {
 setInterval(()=>{
     controls.forward=lerp(controls.forward,controlsRaw.forward,0.01);
     controls.sideways=lerp(controls.sideways,controlsRaw.sideways,0.1);
-},60);
+},40);
 
 
 //get for image
@@ -184,7 +184,9 @@ function updateGpio(){
 
     if(Date.now() - controls.timestamp > 1000){
         setLeftPwm(0);    
-        setRightPwm(0);    
+        setRightPwm(0);
+        controlsRaw.forward=0;
+        controlsRaw.sideways=0;
         return;
     }
 
