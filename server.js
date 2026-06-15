@@ -22,13 +22,23 @@ app.listen(3000, () => {
 
 const latestImage = {};
 
-let controls = {
+let controlsRaw = {
     forward: 0,
     sideways: 0,
     timestamp: Date.now()
 
 }
 
+let controls = {
+    forward: 0,
+    sideways: 0,
+    timestamp: Date.now()
+
+}
+setInterval(()=>{
+    controls.forward=lerp(controls.forward,controlsRaw.forward,0.05);
+    controls.sideways=lerp(controls.sideways,controlsRaw.sideways,0.1);
+},60);
 
 
 //get for image
@@ -53,8 +63,8 @@ app.post('/controls', async (req, res) => {
     }
     
     //update controls, checking validity of true or false
-    controls.forward = parseFloat(data.forward);
-    controls.sideways = parseFloat(data.sideways);
+    controlsRaw.forward = parseFloat(data.forward);
+    controlsRaw.sideways = parseFloat(data.sideways);
 
     controls.timestamp = Date.now();
 
@@ -65,6 +75,10 @@ app.post('/controls', async (req, res) => {
     res.status(200).send('Controls updated');
 });
 
+function lerp(a,b,f){
+    if(Math.abs(a-b)<0.1){return b};
+    return (a*(1-f))+(b*f);
+}
 
 
 let rightBackward1 = new Gpio(17+512,"out"); //4
@@ -125,11 +139,6 @@ function setLeft(dir){
 }
 
 
-
-let pwmPeriod = 50;
-let leftRatio = 0;
-let rightRatio = 0;
-
 class SoftPwm{
     constructor(period,callback){
         this.period = period;
@@ -157,8 +166,8 @@ class SoftPwm{
 }
 
 
-let leftPwm = new SoftPwm(25, setLeft);
-let rightPwm = new SoftPwm(25, setRight);
+let leftPwm = new SoftPwm(20, setLeft);
+let rightPwm = new SoftPwm(20, setRight);
 
 function setLeftPwm(speed){
     leftPwm.highValue=Math.sign(speed);
@@ -173,7 +182,7 @@ function setRightPwm(speed){
 
 function updateGpio(){
 
-    if(Date.now() - controls.timestamp > 300){
+    if(Date.now() - controls.timestamp > 500){
         setLeftPwm(0);    
         setRightPwm(0);    
         return;
@@ -184,8 +193,19 @@ function updateGpio(){
     let leftSpeed = controls.forward;
     let rightSpeed = controls.forward;
 
-    leftSpeed+=controls.sideways;
-    rightSpeed-=controls.sideways;
+
+    
+    if(controls.forward==0){
+        leftSpeed+=controls.sideways;
+        rightSpeed-=controls.sideways;
+    } else {
+        if(controls.sideways>0){
+            rightSpeed = rightSpeed * (1-controls.sideways);
+        } else {
+            leftSpeed = leftSpeed * (1-controls.sideways);
+        }
+    }
+
 
     leftSpeed=Math.min(leftSpeed,1);
     leftSpeed=Math.max(leftSpeed,-1);
@@ -207,7 +227,7 @@ setInterval(()=>{
 
 
 
-},300)
+},100)
 
 
 
