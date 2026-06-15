@@ -1,7 +1,8 @@
 import express from 'express';
 import {Gpio} from "onoff";
 console.log(Gpio);
-
+import "child_process";
+import { spawn,execSync } from 'child_process';
 const app = express();
 
 app.use(express.json())
@@ -22,10 +23,8 @@ app.listen(3000, () => {
 const latestImage = {};
 
 let controls = {
-    forward: false,
-    backward: false,
-    left: false,
-    right: false,
+    forward: 0,
+    sideways: 0,
     timestamp: Date.now()
 
 }
@@ -33,8 +32,13 @@ let controls = {
 
 
 //get for image
-app.get('/image', (req, res) => {
-    let json = JSON.stringify({ image: latestImage});
+app.get('/image', async (req, res) => {
+    //let json = JSON.stringify({ image: latestImage});
+    
+    let proc = execSync("rpicam-jpeg -o - | base64 -w0")
+
+    let json = JSON.stringify({image:image});
+    
     res.status(200).send(json);
 
 });
@@ -49,10 +53,9 @@ app.post('/controls', async (req, res) => {
     }
     
     //update controls, checking validity of true or false
-    controls.forward = data.forward === true;
-    controls.backward = data.backward === true;
-    controls.left = data.left === true;
-    controls.right = data.right === true;
+    controls.forward = parseFloat(data.forward);
+    controls.sideways = parseFloat(data.sideways);
+
     controls.timestamp = Date.now();
 
 
@@ -154,16 +157,16 @@ class SoftPwm{
 }
 
 
-let leftPwm = new SoftPwm(20, setLeft);
-let rightPwm = new SoftPwm(20, setRight);
+let leftPwm = new SoftPwm(25, setLeft);
+let rightPwm = new SoftPwm(25, setRight);
 
-function setLeftPwm(val,duty=1){
-    leftPwm.highValue=val;
-    leftPwm.duty=duty;
+function setLeftPwm(speed){
+    leftPwm.highValue=Math.sign(speed);
+    leftPwm.duty=Math.abs(speed);
 }
-function setRightPwm(val,duty=1){
-    rightPwm.highValue=val;
-    rightPwm.duty=duty;
+function setRightPwm(speed){
+    rightPwm.highValue=Math.sign(speed);
+    rightPwm.duty=Math.abs(speed);
 }
 
 
@@ -178,30 +181,22 @@ function updateGpio(){
 
 
 
+    let leftSpeed = controls.forward;
+    let rightSpeed = controls.forward;
 
-    if(controls.backward){
-        setLeftPwm(-1,0.35);    
-        setRightPwm(-1,0.35);    
-    }
-    else if(controls.forward){
-        
+    leftSpeed+=controls.sideways;
+    rightSpeed-=controls.sideways;
 
-        setLeftPwm(1,0.45);    
-        setRightPwm(1,0.45);    
-    }
-    else if(controls.right){
-        setRightPwm(-1,0.7);    
-        setLeftPwm(1,0.7);
+    leftSpeed=Math.min(leftSpeed,1);
+    leftSpeed=Math.max(leftSpeed,-1);
 
-    }
-    else if(controls.left){
-        setRightPwm(1,0.7);    
-        setLeftPwm(-1,0.7);
-    } else {
-        setRightPwm(0);    
-        setLeftPwm(0);    
+    rightSpeed=Math.min(rightSpeed,1);
+    rightSpeed=Math.max(rightSpeed,-1);
 
-    }
+
+    setLeftPwm(leftSpeed);
+    setRightPwm(rightSpeed);
+
 
 
 }
@@ -213,11 +208,6 @@ setInterval(()=>{
 
 
 },300)
-
-
-
-
-
 
 
 

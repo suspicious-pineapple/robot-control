@@ -12,7 +12,7 @@
 
 
 
-
+        
         <canvas id="viewCanvas" width="800" height="600"></canvas>
         
         <button id="forward" onclick="forward()">Forward</button>
@@ -35,38 +35,70 @@
                 right: false
             }
 
+            let controlVector = {
+                forward:0,
+                sideways:0
+            }
+
             function forward(val) {
                 controls.forward = val
+                if(val){
+                    controlVector.forward += 0.1;
+                    controlVector.forward=Math.min(1,controlVector.forward);
+                } else {   
+                    controlVector.forward = 0;
+                }
+
             }
             
             function backward(val) {
                 controls.backward = val
+                if(val){
+                    controlVector.forward -= 0.1;
+                    controlVector.forward=Math.max(-1,controlVector.forward);
+                } else {   
+                    controlVector.forward = 0;
+                }
             }
 
             function left(val) {
-                controls.left = val
+                controls.left = val;
+                if(val){
+                    controlVector.sideways-=1;
+                    controlVector.sideways=Math.max(-1,controlVector.sideways)
+                } else {
+                    controlVector.sideways=0;
+                }
             }
 
             function right(val) {
                 controls.right = val
+                if(val){
+                    controlVector.sideways+=1;
+                    controlVector.sideways=Math.min(1,controlVector.sideways)
+                } else {
+                    controlVector.sideways=0;
+                }
             }
 
 
 
 
             function submit() {
+
+
+
                 fetch('/controls', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(controls)
+                    body: JSON.stringify(controlVector)
                 });
-                controls = {
-                    forward: false,
-                    backward: false,
-                    left: false,
-                    right: false
+                controlVector = {
+                    forward: 0,
+                    sideways: 0,
+
                 }
             }
 
