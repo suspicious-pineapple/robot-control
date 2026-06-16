@@ -24,20 +24,20 @@ const latestImage = {};
 
 let controlsRaw = {
     forward: 0,
-    sideways: 0,
+    turn: 0,
     timestamp: Date.now()
 
 }
 
 let controls = {
     forward: 0,
-    sideways: 0,
+    turn: 0,
     timestamp: Date.now()
 
 }
 setInterval(()=>{
     controls.forward=lerp(controls.forward,controlsRaw.forward,0.12);
-    controls.sideways=lerp(controls.sideways,controlsRaw.sideways,1);
+    controls.turn=lerp(controls.turn,controlsRaw.turn,1);
 },50);
 
 
@@ -64,7 +64,7 @@ app.post('/controls', async (req, res) => {
     
     //update controls, checking validity of true or false
     controlsRaw.forward = parseFloat(data.forward);
-    controlsRaw.sideways = parseFloat(data.sideways);
+    controlsRaw.turn = parseFloat(data.turn);
 
     controls.timestamp = Date.now();
 
@@ -182,11 +182,11 @@ function setRightPwm(speed){
 
 function updateGpio(){
 
-    if(Date.now() - controls.timestamp > 1000){
+    if(Date.now() - controls.timestamp > 1200){
         setLeftPwm(0);    
         setRightPwm(0);
         controlsRaw.forward=0;
-        controlsRaw.sideways=0;
+        controlsRaw.turn=0;
         return;
     }
 
@@ -197,14 +197,14 @@ function updateGpio(){
 
 
     
-    if(controls.forward==0){
-        leftSpeed+=controls.sideways;
-        rightSpeed-=controls.sideways;
+    if(controls.forward==0||true){
+        leftSpeed+=controls.turn;
+        rightSpeed-=controls.turn;
     } else {
-        if(controls.sideways>0){
-            rightSpeed = rightSpeed * (1-controls.sideways);
+        if(controls.turn>0){
+            rightSpeed = rightSpeed * (1-controls.turn);
         } else {
-            leftSpeed = leftSpeed * (1-controls.sideways);
+            leftSpeed = leftSpeed * (1-controls.turn);
         }
     }
 
