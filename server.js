@@ -3,6 +3,8 @@ import {Gpio} from "onoff";
 console.log(Gpio);
 import "child_process";
 import { spawn,execSync } from 'child_process';
+import {SerialPort} from "serialport";
+
 const app = express();
 
 app.use(express.json())
@@ -230,6 +232,85 @@ setInterval(()=>{
 
 
 },100)
+
+
+
+
+
+
+
+const serial = new SerialPort({path: "/dev/serial0",baudRate:19200});
+
+
+let targets = [];
+
+let buffer = [];
+let currentPacket = [];
+let packetLength = 0;
+serial.on('data', (chunk)=>{
+    //console.log(chunk);
+    for (let index = 0; index < chunk.length; index++) {
+        const element = chunk[index];
+        //console.log("byte:" + element.toString(16));
+        buffer.push(element);
+        if(packetLength>0){
+        if(packetLength>currentPacket.length){
+            currentPacket.push(element);
+        } else {
+            
+            let checksumReceived = currentPacket.pop();
+            let checksumCalc = currentPacket.reduce((prev,cur)=>{return prev+cur}) & 0xFF;
+            let checksumMatch = (checksumCalc==checksumReceived);
+            console.log("packet received: "+currentPacket + " checksum match: "+checksumMatch);
+            currentPacket=[];
+            packetLength=0;
+            buffer==[];
+        }
+        }
+
+        if(buffer.length > 5){
+            if(buffer[buffer.length-5]==0xFF &&buffer[buffer.length-4]==0xEE &&buffer[buffer.length-3]==0xDD){
+                let length = buffer[buffer.length-1];
+                packetLength=length+1; //gotta include the checksum
+                console.log("got packet header! data length:", length);
+            }
+        }
+        
+    }
+})
+
+setTimeout(()=>{
+    sendCommand();
+},6000);
+
+function sendCommand(commandword, dataword){
+    let cmdBuffer = new Uint8Array(11);
+    cmdBuffer[0]=0xFF;
+    cmdBuffer[1]=0xEE;
+    cmdBuffer[2]=0xDD;
+    cmdBuffer[3]=0x00;
+    cmdBuffer[4]=0x02;
+    cmdBuffer[5]=0x02;
+    cmdBuffer[6]=0x03;
+    cmdBuffer[7]=0x05;
+    cmdBuffer[8]=0xDD;
+    cmdBuffer[9]=0xEE;
+    cmdBuffer[10]=0xFF;
+    serial.write(cmdBuffer);
+    serial.drain((v)=>{console.log("callback called! "+v)});
+    console.log("mode set!");
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
