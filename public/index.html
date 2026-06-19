@@ -151,6 +151,19 @@
 
             })
 
+            async function getRadarHistory(){
+                
+                let req = await fetch('/radar', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+                let json = await req.json();
+                return json;
+            }
+
+
 
         </script>
 

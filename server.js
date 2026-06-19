@@ -55,6 +55,17 @@ app.get('/image', async (req, res) => {
 
 });
 
+//get for image
+app.get('/radar', async (req, res) => {
+    //let json = JSON.stringify({ image: latestImage});
+    
+    let json = JSON.stringify({radar:radarHistory});
+    
+    res.status(200).send(json);
+
+});
+
+
 
 let forwardChangeTime = 0;
 app.post('/controls', async (req, res) => {
@@ -264,6 +275,9 @@ serial.on('data', (chunk)=>{
             console.log("packet received: "+currentPacket + " checksum match: "+checksumMatch);
             if(checksumMatch){
                 radarHistory.push(JSON.parse(JSON.stringify(currentPacket)));
+                if(radarHistory.length > 50){
+                    radarHistory.shift();
+                }
             }
             currentPacket=[];
             packetLength=0;
