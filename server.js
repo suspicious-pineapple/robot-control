@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json())
 
 
-
+let radarHistory = [];
 
 //serve public folder
 app.use(express.static('public'));
@@ -262,6 +262,9 @@ serial.on('data', (chunk)=>{
             let checksumCalc = currentPacket.reduce((prev,cur)=>{return prev+cur}) & 0xFF;
             let checksumMatch = (checksumCalc==checksumReceived);
             console.log("packet received: "+currentPacket + " checksum match: "+checksumMatch);
+            if(checksumMatch){
+                radarHistory.push(JSON.parse(JSON.stringify(currentPacket)));
+            }
             currentPacket=[];
             packetLength=0;
             buffer==[];
