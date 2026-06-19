@@ -168,7 +168,6 @@
             let ctx = canvas.getContext("2d");
             setInterval(async ()=>{
                 let radarData = (await getRadarHistory()).radar;
-                console.log()
                 let targets = [];
                 for(let frame of radarData){
                     let id = 0;
@@ -179,6 +178,7 @@
                         id++;
                     }
                 }
+                console.log(targets)
                 ctx.fillStyle = "white";
                 ctx.fillRect(0,0,canvas.width,canvas.height);
                 
