@@ -168,7 +168,7 @@
             let ctx = canvas.getContext("2d");
             setInterval(async ()=>{
                 let radarData = (await getRadarHistory()).radar;
-
+                console.log()
                 let targets = [];
                 for(let frame of radarData){
                     let id = 0;
@@ -181,11 +181,14 @@
                 }
                 ctx.fillStyle = "white";
                 ctx.fillRect(0,0,canvas.width,canvas.height);
+                
                 ctx.strokeStyle = "black";
 
                 for(let target of targets){
                     ctx.fillRect(target.x,target.y,5,5);
                 }
+                ctx.fill();
+                ctx.stroke();
 
 
 
