@@ -274,10 +274,14 @@ serial.on('data', (chunk)=>{
             let checksumMatch = (checksumCalc==checksumReceived);
             if(checksumMatch && currentPacket[0]==7){
                 console.log("packet received: "+currentPacket + " checksum match: "+checksumMatch);
+                
                 currentPacket.shift();
-                radarHistory.push(JSON.parse(JSON.stringify(currentPacket)));
-                if(radarHistory.length > 50){
-                    radarHistory.shift();
+                if(currentPacket.length > 0){
+
+                    radarHistory.push(JSON.parse(JSON.stringify(currentPacket)));
+                    if(radarHistory.length > 50){
+                        radarHistory.shift();
+                    }
                 }
             }
             currentPacket=[];

@@ -171,7 +171,7 @@
                 let targets = [];
                 for(let frame of radarData){
                     let id = 0;
-                    console.log(frame)
+                    console.log(radarData)
                     while(frame.length >=2){
                         let x = frame.shift();
                         let y = frame.shift();
@@ -183,13 +183,11 @@
                 ctx.fillStyle = "white";
                 ctx.fillRect(0,0,canvas.width,canvas.height);
                 
-                ctx.strokeStyle = "black";
+                ctx.fillStyle = "green";
 
                 for(let target of targets){
                     ctx.fillRect(target.x,target.y,5,5);
                 }
-                ctx.fill();
-                ctx.stroke();
 
 
 
