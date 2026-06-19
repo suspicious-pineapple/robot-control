@@ -203,7 +203,8 @@
 
                 for(let hit of hits){
 
-                    let colors = ["#BADB39", "#E71313", "#4CE589", "#2E72D7", "#B11ED6"];
+                    //let colors = ["#BADB39", "#E71313", "#4CE589", "#2E72D7", "#B11ED6"];
+                    let colors = ["green", "#blue", "red", "cyan", "black"];
                     ctx.fillStyle = colors[hit.id];
 
                     ctx.fillRect((hit.x-minX)*scaleX,(hit.y-minY)*scaleY,8,5);
