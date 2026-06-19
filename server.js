@@ -239,7 +239,7 @@ setInterval(()=>{
 
 
 
-const serial = new SerialPort({path: "/dev/serial0",baudRate:19200});
+const serial = new SerialPort({path: "/dev/serial0",baudRate:29600});
 
 
 let targets = [];
