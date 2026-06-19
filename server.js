@@ -273,7 +273,7 @@ serial.on('data', (chunk)=>{
             let checksumCalc = currentPacket.reduce((prev,cur)=>{return prev+cur}) & 0xFF;
             let checksumMatch = (checksumCalc==checksumReceived);
             if(checksumMatch && currentPacket[0]==7){
-                console.log("packet received: "+currentPacket + " checksum match: "+checksumMatch);
+                //console.log("packet received: "+currentPacket + " checksum match: "+checksumMatch);
                 
                 currentPacket.shift();
                 if(currentPacket.length > 0){
