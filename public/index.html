@@ -13,12 +13,11 @@
         <canvas id="radar" width=512 height=512 style="border: 3px solid greenyellow;"></canvas>
 
         
-        <!---
         <button id="forward" onclick="forward()">Forward</button>
         <button id="backward" onclick="backward()">Backward</button>
         <button id="left" onclick="left()">Left</button>
         <button id="right" onclick="right()">Right</button>
-        -->
+        
         
 
 
@@ -171,15 +170,24 @@
                 let targets = [];
                 for(let frame of radarData){
                     let id = 0;
-                    console.log(radarData)
+
                     while(frame.length >=2){
                         let x = frame.shift();
+                        if(x>128){
+                            x-=128;
+                            x=-x;
+                        }
+
                         let y = frame.shift();
                         targets.push({x:x,y:y,id:id});
                         id++;
                     }
                 }
-                console.log(targets)
+
+                console.log(targets.filter(t=>t.id==0).map(t=>t.x).reduce((a,b)=>a+b));
+                console.log(targets.filter(t=>t.id==0).map(t=>t.y).reduce((a,b)=>a+b));
+
+
                 ctx.fillStyle = "white";
                 ctx.fillRect(0,0,canvas.width,canvas.height);
                 
