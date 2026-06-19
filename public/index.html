@@ -10,7 +10,7 @@
 
         <img src="http://droplet:8080/video_feed_0" width="1920" height="1080"/>
 
-
+        <canvas id="radar" width=255 height=255></canvas>
 
         
         <!---
@@ -164,8 +164,40 @@
             }
 
 
+            let canvas = document.getElementById("radar")
+            let ctx = canvas.getContext("2d");
+            setInterval(async ()=>{
+                let radarData = await getRadarHistory();
+
+                let targets = [];
+                for(let frame of radarData){
+                    let id = 0;
+                    while(frame.length >=2){
+                        let x = frame.shift();
+                        let y = frame.shift();
+                        targets.push({x:x,y:y,id:id});
+                        id++;
+                    }
+                }
+                ctx.fillStyle = "white";
+                ctx.fillRect(0,0,canvas.width,canvas.height);
+                ctx.strokeStyle = "black";
+
+                for(let target of targets){
+                    ctx.fillRect(target.x,target.y,5,5);
+                }
+
+
+
+
+            },1000)
+
+
+
+
 
         </script>
+
 
 
 
