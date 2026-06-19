@@ -174,8 +174,7 @@
                     while(frame.length >=2){
                         let x = frame.shift();
                         if(x>128){
-                            x-=128;
-                            x=-x;
+                            x-=256;
                         }
 
                         let y = frame.shift();
@@ -190,6 +189,8 @@
                 let maxY = Math.max(...hits.map(h=>h.y));
                 let minY = Math.min(...hits.map(h=>h.y));
                 let minX = Math.min(...hits.map(h=>h.x));
+
+                
 
                 let scaleX = 512 / (maxX-minX);
                 let scaleY = 512 / (maxY-minY);
