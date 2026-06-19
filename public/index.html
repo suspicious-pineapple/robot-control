@@ -11,6 +11,7 @@
         <img src="http://100.105.111.65:8080/video_feed_0" width="1920" height="1080" id="camera"/>
 
         <canvas id="radar" width=512 height=512 style="border: 3px solid greenyellow;"></canvas>
+        <canvas id="radar_unscaled" width=256 height=256 style="border: 3px solid green;"></canvas>
 
         
         <button id="forward" onclick="forward(1)">Forward</button>
@@ -163,7 +164,9 @@
 
 
             let canvas = document.getElementById("radar")
+            let canvasOverview = document.getElementById("radar_unscaled");
             let ctx = canvas.getContext("2d");
+            let ctxOverview = canvas.getContext("2d");
             setInterval(async ()=>{
                 let radarData = (await getRadarHistory()).radar;
                 let hits = [];
@@ -198,7 +201,9 @@
                 console.log(scaleX,scaleY);
 
                 ctx.fillStyle = "white";
+                ctxOverview.fillStyle = "white";
                 ctx.fillRect(0,0,canvas.width,canvas.height);
+                ctxOverview.fillRect(0,0,canvas.width,canvas.height);
                 
                 ctx.fillStyle = "green";
 
@@ -207,8 +212,10 @@
                     //let colors = ["#BADB39", "#E71313", "#4CE589", "#2E72D7", "#B11ED6"];
                     let colors = ["green", "#blue", "red", "cyan", "black"];
                     ctx.fillStyle = colors[hit.id];
+                    ctxOverview.fillStyle = colors[hit.id];
 
-                    ctx.fillRect((hit.x-minX)*scaleX,(hit.y-minY)*scaleY,8,5);
+                    ctx.fillRect((hit.x-minX)*scaleX,(hit.y-minY)*scaleY,6,4);
+                    ctxOverview.fillRect((hit.x)*2,hit.y2,8,5);
                 }
 
 
