@@ -279,7 +279,7 @@ serial.on('data', (chunk)=>{
                 if(currentPacket.length > 0){
 
                     radarHistory.push(JSON.parse(JSON.stringify(currentPacket)));
-                    if(radarHistory.length > 50){
+                    if(radarHistory.length > 250){
                         radarHistory.shift();
                     }
                 }
