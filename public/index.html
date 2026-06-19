@@ -166,7 +166,7 @@
             let canvas = document.getElementById("radar")
             let canvasOverview = document.getElementById("radar_unscaled");
             let ctx = canvas.getContext("2d");
-            let ctxOverview = canvas.getContext("2d");
+            let ctxOverview = canvasOverview.getContext("2d");
             setInterval(async ()=>{
                 let radarData = (await getRadarHistory()).radar;
                 let hits = [];
