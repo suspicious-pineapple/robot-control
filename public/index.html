@@ -10,7 +10,7 @@
 
         <img src="http://droplet:8080/video_feed_0" width="1920" height="1080"/>
 
-        <canvas id="radar" width=255 height=255 style="border: 3px solid greenyellow;"></canvas>
+        <canvas id="radar" width=512 height=512 style="border: 3px solid greenyellow;"></canvas>
 
         
         <!---
@@ -186,7 +186,7 @@
                 ctx.fillStyle = "green";
 
                 for(let target of targets){
-                    ctx.fillRect(target.x,target.y*8,5,5);
+                    ctx.fillRect(target.x*2,target.y*8,5,8);
                 }
 
 
