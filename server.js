@@ -39,7 +39,7 @@ let controls = {
 }
 setInterval(()=>{
     controls.forward=lerp(controls.forward,controlsRaw.forward,0.12);
-    controls.turn=lerp(controls.turn,controlsRaw.turn,1);
+    controls.turn=lerp(controls.turn,controlsRaw.turn,0.5);
 },50);
 
 
