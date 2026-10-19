@@ -92,38 +92,35 @@ function lerp(a,b,f){
     if(Math.abs(a-b)<0.1){return b};
     return (a*(1-f))+(b*f);
 }
-
-
-let rightBackward1 = new Gpio(17+512,"out"); //4
-let rightBackward2 = new Gpio(27+512,"out"); //17
-let rightForward1 = new Gpio(4+512,"out"); //27
-let rightForward2 = new Gpio(22+512,"out"); //22
-let leftBackward1 = new Gpio(19+512,"out"); //5 
-let leftBackward2 = new Gpio(5+512,"out"); //6
-let leftForward1 = new Gpio(13+512,"out"); //13
-let leftForward2 = new Gpio(6+512,"out"); //19
-
+let rightBackward1 = new Gpio(26+512,"out"); //4
+//let rightBackward2 = new Gpio(27+512,"out"); //17
+let rightForward1 = new Gpio(16+512,"out"); //27
+//let rightForward2 = new Gpio(22+512,"out"); //22
+let leftBackward1 = new Gpio(5+512,"out"); //5
+//let leftBackward2 = new Gpio(5+512,"out"); //6
+let leftForward1 = new Gpio(6+512,"out"); //13
+//let leftForward2 = new Gpio(6+512,"out"); //19
 
 
 
 function setRight(dir){
     if(dir==-1){
         rightForward1.write(0);
-        rightForward2.write(0);
+        //rightForward2.write(0);
         rightBackward1.write(1);
-        rightBackward2.write(1);
+        //rightBackward2.write(1);
     }
     if(dir==0){
         rightForward1.write(0);
-        rightForward2.write(0);
+        //rightForward2.write(0);
         rightBackward1.write(0);
-        rightBackward2.write(0);
+        ///rightBackward2.write(0);
     }
     if(dir==1){
         rightForward1.write(1);
-        rightForward2.write(1);
+        //rightForward2.write(1);
         rightBackward1.write(0);
-        rightBackward2.write(0);
+        //rightBackward2.write(0);
     }
 }
 
@@ -133,21 +130,21 @@ function setRight(dir){
 function setLeft(dir){
     if(dir==-1){
         leftForward1.write(0);
-        leftForward2.write(0);
+        //leftForward2.write(0);
         leftBackward1.write(1);
-        leftBackward2.write(1);
+        //leftBackward2.write(1);
     }
     if(dir==0){
         leftForward1.write(0);
-        leftForward2.write(0);
+        //leftForward2.write(0);
         leftBackward1.write(0);
-        leftBackward2.write(0);
+        //leftBackward2.write(0);
     }
     if(dir==1){
         leftForward1.write(1);
-        leftForward2.write(1);
+        //leftForward2.write(1);
         leftBackward1.write(0);
-        leftBackward2.write(0);
+        //leftBackward2.write(0);
     }
 }
 
