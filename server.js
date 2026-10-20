@@ -18,7 +18,7 @@ app.use(express.static('public'));
 
 //listen to port 3000
 app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+    console.log('Server is running on http://localhost:3000',{parseReqBody:false});
 });
 
 app.use("/v1",proxy("http://arclight:8080/v1"))
