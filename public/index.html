@@ -280,12 +280,15 @@ async function decide(){
   // dataUrl is now "data:image/png;base64,iVBOR..."
 
 
+console.log(
+await decide("are you hugnry?",{
+    is_hungry: {
+        type:"noul"
+    }
+})
 
-  console.log(decision("are you hungry",{
-            should_reply: {
-                instructions:"How hungry",
-                type:"noul"
-    }}));
+)
+
 
 
 }
