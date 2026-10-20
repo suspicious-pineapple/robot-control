@@ -8,7 +8,7 @@ import {SerialPort} from "serialport";
 
 const app = express();
 
-app.use(express.json())
+//app.use(express.json())
 
 
 let radarHistory = [];
