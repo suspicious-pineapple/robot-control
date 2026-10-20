@@ -275,8 +275,8 @@ async function blobToDataUrl(blob) {
 }
 
 async function decide(){
-  //let img = await (await fetch("/snapshot_0")).blob();
-  //let dataUrl = await blobToDataUrl(img);
+  let img = await (await fetch("/snapshot_0")).blob();
+  let dataUrl = await blobToDataUrl(img);
   // dataUrl is now "data:image/png;base64,iVBOR..."
 
 
@@ -286,7 +286,7 @@ await decision("see pic",{
         type:"noul",
         instructions:"is the room clean?"
     }
-},"http://droplet:8080/snapshot_0")
+},dataUrl)
 
 )
 
