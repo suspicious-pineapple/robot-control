@@ -281,12 +281,12 @@ async function decide(){
 
 
 console.log(
-await decision("are you hugnry?",{
-    is_hungry: {
+await decision("see pic",{
+    mess: {
         type:"noul",
-        instructions:"is the user hungry?"
+        instructions:"is the room clean?"
     }
-})
+},"http://droplet:8080/snapshot_0")
 
 )
 
@@ -302,6 +302,7 @@ async function decision(state,questions, image=null){
     let body = {
         state:state,
         questions: questions,
+        images:[image],
         model: "LFM-D1-3b"
 
 
