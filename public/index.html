@@ -229,36 +229,42 @@
                     //controlVector.turn=Math.min(1,controlVector.turn)
                     //controlVector.turn=Math.max(-1,controlVector.turn)
                     amount=Math.max(Math.min(amount,1),-1);
-                    controlVector.turn = -0.5;
-                    controlVector.forward=0;
-                    submit();
-                    await new Promise(r=>setTimeout(r,amount*1000));
-                    controlVector.turn = 0;
-                    submit();
+
+                                    let subInt = setInterval(()=>{
+                controlVector.turn = -0.5;
+                controlVector.forward = 0;
+                submit();},50);
+                setTimeout(()=>{clearInterval(subInt);controlVector.turn=0;submit()},amount*1000)
+
+
             }
             async function turn_right(amount){
                 controlVector.turn = 0.5;
                 controlVector.forward=0;
-                await new Promise(r=>setTimeout(r,amount*1000));
-                controlVector.turn = 0;
-                submit();
                 
-            }
-            
-            
-            async function go_forward(amount){
-                amount=Math.max(Math.min(amount,1),-1);
-                    
+
+                let subInt = setInterval(()=>{
+                controlVector.turn = 0.5;
+                controlVector.forward = 0;
+                submit();},50);
+                setTimeout(()=>{clearInterval(subInt);controlVector.turn=0;submit()},amount*1000)
 
             }
+            
+            
             async function go_forward(amount){
                 amount=Math.max(Math.min(amount,1),-1);
                 controlVector.turn = 0;
                 controlVector.forward = 0.5;
-                    submit();
-                    await new Promise(r=>setTimeout(r,amount*1000));
-                    controlVector.forward = 0;
-                    submit();
+
+
+
+                let subInt = setInterval(()=>{
+                controlVector.turn = 0;
+                controlVector.forward = 0.5;
+                submit();},50);
+                setTimeout(()=>{clearInterval(subInt);controlVector.forward=0;submit()},amount*1000)
+
 
             }
 
