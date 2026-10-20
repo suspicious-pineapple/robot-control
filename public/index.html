@@ -150,6 +150,7 @@
 
             })
 
+            /*
             async function getRadarHistory(){
                 
                 let req = await fetch('/radar', {
@@ -161,7 +162,6 @@
                 let json = await req.json();
                 return json;
             }
-
 
             let canvas = document.getElementById("radar")
             let canvasOverview = document.getElementById("radar_unscaled");
@@ -197,7 +197,7 @@
 
                 let scaleX = 512 / (maxX-minX);
                 let scaleY = 512 / (maxY-minY);
-                
+
                 console.log(scaleX,scaleY);
 
                 ctx.fillStyle = "white";
@@ -222,9 +222,45 @@
 
 
             },200)
+            */
 
+            async function turn_left(amount){
 
+                    //controlVector.turn=Math.min(1,controlVector.turn)
+                    //controlVector.turn=Math.max(-1,controlVector.turn)
+                    amount=Math.max(Math.min(amount,1),-1);
+                    controlVector.turn = -0.5;
+                    controlVector.forward=0;
+                    submit();
+                    await new Promise(r=>setTimeout(r,amount*1000));
+                    controlVector.turn = 0;
+                    submit();
+            }
+            async function turn_right(amount){
+                controlVector.turn = 0.5;
+                controlVector.forward=0;
+                await new Promise(r=>setTimeout(r,amount*1000));
+                controlVector.turn = 0;
+                submit();
+                
+            }
+            
+            
+            async function go_forward(amount){
+                amount=Math.max(Math.min(amount,1),-1);
+                    
 
+            }
+            async function go_forward(amount){
+                amount=Math.max(Math.min(amount,1),-1);
+                controlVector.turn = 0;
+                controlVector.forward = 0.5;
+                    submit();
+                    await new Promise(r=>setTimeout(r,amount*1000));
+                    controlVector.forward = 0;
+                    submit();
+
+            }
 
 
         </script>

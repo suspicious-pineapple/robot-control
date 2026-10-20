@@ -1,4 +1,5 @@
 import express from 'express';
+import proxy from "express-http-proxy";
 import {Gpio} from "onoff";
 console.log(Gpio);
 import "child_process";
@@ -20,7 +21,7 @@ app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
 
-
+app.use("/v1",proxy())
 
 const latestImage = {};
 
@@ -48,7 +49,7 @@ app.get('/image', async (req, res) => {
     //let json = JSON.stringify({ image: latestImage});
     
     let proc = execSync("rpicam-jpeg -o - | base64 -w0")
-
+    let image = proc.stdout;
     let json = JSON.stringify({image:image});
     
     res.status(200).send(json);
