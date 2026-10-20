@@ -9,7 +9,6 @@
 
 
         <img src="http://100.105.111.65:8080/video_feed_0" width="1920" height="1080" id="camera"/>
-        <canvas id="exportcanvas" width="1920" height="1080"></canvas>
         <canvas id="radar" width=512 height=512 style="border: 3px solid greenyellow;"></canvas>
         <canvas id="radar_unscaled" width=512 height=512 style="border: 3px solid green;"></canvas>
 
@@ -266,14 +265,13 @@
 
             }
 
-            let cameraImg = document.getElementById("camera");
-            let canvas = document.getElementById("exportcanvas");
+            async function decide(){
+                let img = (await fetch("/snapshot_0"));
 
-            function getImageData(){
-                let ctx = canvas.getContext("2d");
-                ctx.drawImage(cameraImg,0,0);
-                alert(canvas.toDataUrl());
+
+            
             }
+
 
 
 
