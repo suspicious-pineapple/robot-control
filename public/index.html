@@ -264,13 +264,57 @@
 
 
             }
+            
+async function blobToDataUrl(blob) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = () => rej(r.error);
+    r.readAsDataURL(blob);
+  });
+}
 
-            async function decide(){
-                let img = (await fetch("/snapshot_0"));
+async function decide(){
+  let img = await (await fetch("/snapshot_0")).blob();
+  let dataUrl = await blobToDataUrl(img);
+  // dataUrl is now "data:image/png;base64,iVBOR..."
+
+
+
+  console.log(decision("are you hungry"),{
+            should_reply: {
+                instructions:"How hungry",
+                type:"noul"
+}})
+
+
+}
 
 
             
-            }
+async function decision(state,questions, image=null){
+
+
+    let body = {
+        state:state,
+        questions: questions,
+        model: "LFM-D1-3b"
+
+
+    };
+    let res = await fetch("/v1/systemone", {
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+        
+    });
+    let json = await res.json();
+    return json.answers;
+
+
+}
 
 
 
