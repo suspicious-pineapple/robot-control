@@ -275,10 +275,10 @@ async function blobToDataUrl(blob) {
 }
 
 async function decide(){
-  let img = await (await fetch("/snapshot_0")).blob();
+  let img = await (await fetch("/snapshot_0/snapshot_0")).blob();
   let dataUrl = await blobToDataUrl(img);
   // dataUrl is now "data:image/png;base64,iVBOR..."
-
+//console.log(dataUrl);
 
 console.log(
 await decision("see pic",{
