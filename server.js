@@ -21,7 +21,7 @@ app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
 
-app.use("/v1",proxy())
+app.use("/v1",proxy("http://arclight:8080/v1"))
 
 const latestImage = {};
 
