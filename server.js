@@ -112,9 +112,6 @@ async function trackingStep(){
 
 
 }
-while(true){
-    await trackingStep();
-}
 
 //setInterval(trackingStep,5000);
 
@@ -411,6 +408,9 @@ function sendCommand(commandword, dataword){
 
 
 
+while(true){
+    await trackingStep();
+}
 
 
 
