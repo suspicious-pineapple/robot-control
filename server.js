@@ -104,9 +104,10 @@ async function trackingStep(){
     let answers = await decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,img);
     console.log(answers);
     if(answers.target_in_view.noul > 0.7){
-        let dir = (answers.target_dir.score - 1)/4;
+        let dir = (answers.target_dir.score - 1)/2;
         controlsRaw.turn = dir;
-        controls.timestamp = Date.now();
+        let mag = Math.abs(dir);
+        controls.timestamp = Date.now() - (1-mag)*1200;
     }
 
 
