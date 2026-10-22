@@ -42,7 +42,7 @@ let controls = {
 }
 setInterval(()=>{
     controls.forward=lerp(controls.forward,controlsRaw.forward,0.12);
-    controls.turn=lerp(controls.turn,controlsRaw.turn,0.5);
+    controls.turn=lerp(controls.turn,controlsRaw.turn,0.2);
 },50);
 
 
@@ -107,8 +107,8 @@ async function trackingStep(){
     console.log(answers);
     if(answers.target_in_view.noul > 0.7){
         let dir = (answers.target_dir.score - 1)/1.5;
-        controlsRaw.turn = Math.sign(dir)/2;
-        let mag = Math.abs(dir/4);
+        controlsRaw.turn = Math.sign(dir)*0.7;
+        let mag = Math.abs(dir/3);
         controls.timestamp = Date.now() - ((1-mag)*1200);
     }
 
