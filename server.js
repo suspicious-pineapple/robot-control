@@ -79,7 +79,7 @@ async function decision(state,questions, image=null){
 
 }
 
-let trackingPolicy = "human";
+let trackingPolicy = "Which way is the person pointing?";
 
 async function trackingStep(){
 
@@ -106,9 +106,9 @@ async function trackingStep(){
     answers = await answers;
     console.log(answers);
     if(answers.target_in_view.noul > 0.7){
-        let dir = (answers.target_dir.score - 1)/1.5;
-        controlsRaw.turn = Math.sign(dir)*0.7;
-        let mag = Math.abs(dir/3);
+        let dir = (answers.target_dir.score - 1);
+        controlsRaw.turn = Math.sign(dir)*0.75;
+        let mag = Math.abs(dir/2);
         controls.timestamp = Date.now() - ((1-mag)*1200);
     }
 
