@@ -25,7 +25,7 @@ app.use("/snapshot_0",proxy("http://localhost:8080/snapshot_0/snapshot_0",{
   parseReqBody: false,
 }))
 
-const latestImage = {};
+let latestImage = "";
 
 let controlsRaw = {
     forward: 0,
@@ -100,8 +100,8 @@ async function trackingStep(){
         },
         
     }
-    let img = await getImage();
-    let answers = await decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,img);
+    getImage().then(i=>latestImage=i);
+    let answers = await decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,latestImage);
     console.log(answers);
     if(answers.target_in_view.noul > 0.7){
         let dir = (answers.target_dir.score - 1)/2;
@@ -410,7 +410,7 @@ function sendCommand(commandword, dataword){
 
 
 
-
+latestImage = await getImage();
 
 
 while(true){
