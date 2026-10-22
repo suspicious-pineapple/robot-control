@@ -100,8 +100,10 @@ async function trackingStep(){
         },
         
     }
-    getImage().then(i=>latestImage=i);
-    let answers = await decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,latestImage);
+    //getImage().then(i=>latestImage=i);
+    let answers = decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,latestImage);
+    latestImage = await getImage();
+    answers = await answers;
     console.log(answers);
     if(answers.target_in_view.noul > 0.7){
         let dir = (answers.target_dir.score - 1)/2;
@@ -411,7 +413,6 @@ function sendCommand(commandword, dataword){
 
 
 latestImage = await getImage();
-
 
 while(true){
     await trackingStep();
