@@ -81,7 +81,7 @@ async function decision(state,questions, image=null){
 
 let trackingPolicy = "Human";
 let fetchNew = false;
-let lastFetch = null;
+let lastFetch = getImage();
 async function trackingStep(){
 
     let questions = {
