@@ -107,9 +107,9 @@ async function trackingStep(){
     console.log(answers);
     if(answers.target_in_view.noul > 0.7){
         let dir = (answers.target_dir.score - 1)/1.5;
-        controlsRaw.turn = dir;
-        let mag = Math.abs(dir/2);
-        controls.timestamp = Date.now() - (1-mag)*1200;
+        controlsRaw.turn = Math.sign(dir)/2;
+        let mag = Math.abs(dir/4);
+        controls.timestamp = Date.now() - ((1-mag)*1200);
     }
 
 
