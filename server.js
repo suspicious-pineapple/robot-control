@@ -79,7 +79,7 @@ async function decision(state,questions, image=null){
 
 }
 
-let trackingPolicy = "Which way is the person pointing?";
+let trackingPolicy = "Human Feet";
 
 async function trackingStep(){
 
