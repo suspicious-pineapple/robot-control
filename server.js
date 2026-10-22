@@ -64,7 +64,7 @@ async function decision(state,questions, image=null){
         state:state,
         questions: questions,
         images:[image],
-        model: "LFM-D1-Omni"
+        model: "LFM-D1-3B"
     };
     let res = await fetch("http://arclight:8080/v1/systemone", {
         method:"POST",
@@ -79,8 +79,9 @@ async function decision(state,questions, image=null){
 
 }
 
-let trackingPolicy = "Human Feet";
-
+let trackingPolicy = "Human";
+let fetchNew = false;
+let lastFetch = null;
 async function trackingStep(){
 
     let questions = {
@@ -88,11 +89,13 @@ async function trackingStep(){
             type:"noul",
             instructions: "Is the target: "+trackingPolicy+" in view?"
         },
+        /*
         "distance_to_wall":{
             type:"score",
             instructions:"How far is the rover from bumping into a wall?",
             criteria: ["Clear path ahead or wall only visible in the distance", "Wall within 1 meter", "Camera directly facing against wall"]
         },
+        */
         "target_dir":{
             type:"score",
             instructions:"Locate the target"+trackingPolicy+" in the image. Is the target left, center, or right?",
@@ -101,8 +104,19 @@ async function trackingStep(){
         
     }
     //getImage().then(i=>latestImage=i);
-    latestImage = await getImage();
+    if(fetchNew){
+
+        latestImage = await getImage();
+    } else {
+        latestImage = await lastFetch;
+    }
+
     let answers = decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,latestImage);
+    if(fetchNew){
+        lastFetch = getImage();
+    }
+
+    fetchNew=!fetchNew;
     answers = await answers;
     console.log(answers);
     if(answers.target_in_view.noul > 0.7){
