@@ -21,7 +21,6 @@ app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
 app.use(express.json({ limit: '50mb' }));
-app.use("/v1",proxy("http://arclight:8080/v1",{parseReqBody:false}))
 app.use("/snapshot_0",proxy("http://localhost:8080/snapshot_0/snapshot_0",{
   parseReqBody: false,
 }))
@@ -59,7 +58,74 @@ app.get('/image', async (req, res) => {
 
 });
 
+            
+async function decision(state,questions, image=null){
+    let body = {
+        state:state,
+        questions: questions,
+        images:[image],
+        model: "LFM-D1-3b"
+    };
+    let res = await fetch("http://arclight:8080/v1/systemone", {
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+
+    let json = await res.json();
+    return json.answers;
+
+}
+
+let trackingPolicy = "human";
+async function trackingStep(){
+
+    let questions = {
+        "target_in_view":{
+            type:"noul",
+            instructions: "Is the target: "+trackingPolicy+" in view?"
+        },
+        "distance_to_wall":{
+            type:"score",
+            instructions:"How far is the rover from bumping into a wall?",
+            criteria: ["Clear path ahead or wall only visible in the distance", "Wall within 1 meter", "Camera directly facing against wall"]
+        },
+        "target_dir":{
+            type:"score",
+            instructions:"Locate the target"+trackingPolicy+" in the image. Is the target left, center, or right?",
+            criteria: ["target is: left", "target is: straight ahead", "target is: right"]
+        },
+        
+    }
+    let img = await getImage();
+    let answers = await decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,img);
+    console.log(answers);
+    
+
+}
+
+setInterval(trackingStep,5000);
+
+
+
 //get for image
+async function getImage(){
+
+    let response = await fetch("http://localhost:8080/snapshot_0");
+    let blob = await response.blob();
+
+    let arrayBuffer = await blob.arrayBuffer();
+    let b64 = Buffer.from(arrayBuffer).toString("base64");
+    let mime = blob.type; // "image/png"
+
+    let dataUrl = `data:${mime};base64,${b64}`;
+    return dataUrl;
+}
+
+
+
 app.get('/radar', async (req, res) => {
     //let json = JSON.stringify({ image: latestImage});
     
