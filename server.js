@@ -64,7 +64,7 @@ async function decision(state,questions, image=null){
         state:state,
         questions: questions,
         images:[image],
-        model: "LFM-D1-3b"
+        model: "LFM-D1-Omni"
     };
     let res = await fetch("http://arclight:8080/v1/systemone", {
         method:"POST",
