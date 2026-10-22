@@ -106,7 +106,7 @@ async function trackingStep(){
     if(answers.target_in_view.noul > 0.7){
         let dir = (answers.target_dir - 1)/4;
         controlsRaw.turn = dir;
-
+        controlsRaw.timestamp = Date.now();
     }
 
 
