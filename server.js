@@ -80,6 +80,7 @@ async function decision(state,questions, image=null){
 }
 
 let trackingPolicy = "human";
+
 async function trackingStep(){
 
     let questions = {
@@ -102,11 +103,20 @@ async function trackingStep(){
     let img = await getImage();
     let answers = await decision("You are part of an autonomous rover navigation system. Consider the image input.", questions,img);
     console.log(answers);
-    
+    if(answers.target_in_view.noul > 0.7){
+        let dir = (answers.target_dir - 1)/4;
+        controlsRaw.turn = dir;
+
+    }
+
+
 
 }
+while(true){
+    await trackingStep();
+}
 
-setInterval(trackingStep,5000);
+//setInterval(trackingStep,5000);
 
 
 
