@@ -412,7 +412,9 @@ function sendCommand(commandword, dataword){
 
 
 
-
+while(true){
+    await trackingStep();
+}
 
 
 
