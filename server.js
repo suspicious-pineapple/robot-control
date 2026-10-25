@@ -339,7 +339,7 @@ setInterval(()=>{
 
 
 
-
+setInterval(()=>{console.log("alive")},1000)
 
 const serial = new SerialPort({path: "/dev/serial0",baudRate:29600});
 
