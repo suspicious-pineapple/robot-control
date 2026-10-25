@@ -429,7 +429,7 @@ function sendCommand(commandword, dataword){
 latestImage = await getImage();
 
 while(true){
-    await trackingStep();
+    //await trackingStep();
 }
 
 
